@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Santuário Gótico</title>
+
+    <!-- Fontes Góticas Extravagantes (Google Fonts) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=UnifrakturMaguntia&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #0d0d0d;
+            color: #d4af37;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            min-height: 100vh;
+            padding: 30px 20px;
+            font-family: 'Georgia', 'Times New Roman', serif;
+        }
+
+        h1 {
+            font-family: 'UnifrakturMaguntia', cursive;
+            color: #8b0000;
+            text-shadow: 0 0 15px #4a0000, 0 0 30px #000;
+            margin-bottom: 25px;
+            font-size: 4rem;
+            letter-spacing: 3px;
+            text-align: center;
+        }
+
+        .container {
+            background-color: #141414;
+            border: 1px solid #8b0000;
+            box-shadow: 0 0 20px rgba(139, 0, 0, 0.4);
+            border-radius: 8px;
+            padding: 35px;
+            width: 100%;
+            max-width: 680px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            font-family: 'UnifrakturMaguntia', cursive;
+            color: #d4af37;
+            font-size: 2.2rem;
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 15px;
+            margin-bottom: 25px;
+        }
+
+        button {
+            font-family: 'Cinzel Decorative', serif;
+            font-weight: bold;
+            background-color: #1a0000;
+            color: #d4af37;
+            border: 1px solid #8b0000;
+            padding: 12px 22px;
+            font-size: 0.95rem;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #8b0000;
+            color: #ffffff;
+            box-shadow: 0 0 12px #8b0000;
+        }
+
+        .card-resultado {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #090909;
+            border-left: 4px solid #8b0000;
+            min-height: 100px;
+            display: none;
+            text-align: left;
+        }
+
+        .card-resultado h3 {
+            font-family: 'UnifrakturMaguntia', cursive;
+            color: #8b0000;
+            font-size: 1.8rem;
+            margin-bottom: 5px;
+        }
+
+        .card-resultado h4 {
+            color: #aaa;
+            font-style: italic;
+            margin-bottom: 15px;
+            font-size: 1rem;
+        }
+
+        .card-resultado p {
+            color: #e0e0e0;
+            line-height: 1.6;
+            white-space: pre-line;
+            font-size: 1.05rem;
+        }
+
+        iframe {
+            width: 100%;
+            height: 152px;
+            border: none;
+            border-radius: 12px;
+            margin-top: 10px;
+        }
+
+        hr {
+            border: 0;
+            height: 1px;
+            background: linear-gradient(to right, transparent, #8b0000, transparent);
+            margin: 35px 0;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            text-align: left;
+        }
+
+        label {
+            color: #d4af37;
+            font-size: 0.95rem;
+        }
+
+        input, select, textarea {
+            background-color: #090909;
+            border: 1px solid #4a0000;
+            color: #e0e0e0;
+            padding: 12px;
+            border-radius: 4px;
+            font-size: 1rem;
+            font-family: 'Georgia', serif;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #8b0000;
+            box-shadow: 0 0 8px #8b0000;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Santuário Gótico</h1>
+
+<div class="container">
+    <h2>Sorteie uma obra:</h2>
+    <div class="btn-group">
+        <button onclick="sortear('MUSICA')">Uma Música</button>
+        <button onclick="sortear('LIVRO')">Um Livro</button>
+        <button onclick="sortear('POESIA')">Uma Poesia</button>
+    </div>
+
+    <div id="resultado" class="card-resultado">
+        <h3 id="res-titulo"></h3>
+        <h4 id="res-autor"></h4>
+        <div id="res-conteudo"></div>
+    </div>
+
+    <hr>
+
+    <h2>Faça seu registro</h2>
+    <form id="form-registro" onsubmit="registrarObra(event)">
+        <div>
+            <label>Tipo:</label>
+            <select id="tipo" onchange="alternarCamposForm()" required>
+                <option value="LIVRO">Livro</option>
+                <option value="POESIA">Poesia</option>
+                <option value="MUSICA">Música</option>
+            </select>
+        </div>
+
+        <div>
+            <label>Título:</label>
+            <input type="text" id="titulo" required>
+        </div>
+
+        <div>
+            <label id="lbl-autor">Autor(a):</label>
+            <input type="text" id="autor" required>
+        </div>
+
+        <div id="campo-texto" style="display: none;">
+            <label>Trecho/Texto da Poesia:</label>
+            <textarea id="conteudo" rows="4"></textarea>
+        </div>
+
+        <div id="campo-spotify" style="display: none;">
+            <label>Link Embed do Spotify (src do iframe):</label>
+            <input type="text" id="spotifyUrl" placeholder="https://open.spotify.com/embed/track/...">
+        </div>
+
+        <button type="submit" style="margin-top: 10px;">Registrar na Escuridão</button>
+    </form>
+</div>
+
+<script>
+    async function sortear(tipo) {
+        try {
+            const response = await fetch(`http://localhost:8080/api/poesias/sortear/${tipo}`);
+            if (!response.ok) throw new Error("Nada encontrado");
+
+            const obra = await response.json();
+
+            document.getElementById('res-titulo').innerText = obra.titulo;
+            document.getElementById('res-autor').innerText = "por " + obra.autor;
+
+            const divConteudo = document.getElementById('res-conteudo');
+            divConteudo.innerHTML = "";
+
+            if (tipo === 'POESIA' && obra.conteudo) {
+                divConteudo.innerHTML = `<p>"${obra.conteudo}"</p>`;
+            } else if (tipo === 'MUSICA' && obra.spotifyUrl) {
+                divConteudo.innerHTML = `<iframe src="${obra.spotifyUrl}" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>`;
+            }
+
+            document.getElementById('resultado').style.display = 'block';
+        } catch (err) {
+            alert("Erro ao sortear item desta categoria.");
+        }
+    }
+
+    function alternarCamposForm() {
+        const tipo = document.getElementById('tipo').value;
+        const campoTexto = document.getElementById('campo-texto');
+        const campoSpotify = document.getElementById('campo-spotify');
+        const lblAutor = document.getElementById('lbl-autor');
+
+        campoTexto.style.display = tipo === 'POESIA' ? 'block' : 'none';
+        campoSpotify.style.display = tipo === 'MUSICA' ? 'block' : 'none';
+        lblAutor.innerText = tipo === 'MUSICA' ? 'Artista/Banda:' : 'Autor(a):';
+    }
+
+    async function registrarObra(event) {
+        event.preventDefault();
+
+        const novaObra = {
+            tipo: document.getElementById('tipo').value,
+            titulo: document.getElementById('titulo').value,
+            autor: document.getElementById('autor').value,
+            conteudo: document.getElementById('conteudo').value || null,
+            spotifyUrl: document.getElementById('spotifyUrl').value || null
+        };
+
+        try {
+            const response = await fetch('http://localhost:8080/api/poesias', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(novaObra)
+            });
+
+            if (response.ok) {
+                alert("Obra registrada com sucesso na escuridão!");
+                document.getElementById('form-registro').reset();
+                alternarCamposForm();
+            } else {
+                alert("Erro ao salvar a obra.");
+            }
+        } catch (err) {
+            alert("Erro ao se conectar ao servidor.");
+        }
+    }
+
+    alternarCamposForm();
+</script>
+</body>
+</html>
